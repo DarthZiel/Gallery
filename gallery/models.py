@@ -9,7 +9,7 @@ def custom_upload_to(instance, filename):
     """
     extension = os.path.splitext(filename)[-1]
     unique_filename = f"{instance.name}{extension}"
-    return os.path.join('/ThreeDModel/', unique_filename)
+    return os.path.join('ThreeDModel', unique_filename)
 
 
 
