@@ -11,9 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 import os
 from pathlib import Path
-from dotenv import load_dotenv
-
-load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,8 +42,6 @@ INSTALLED_APPS = [
     "gallery.apps.GalleryConfig",
     "corsheaders",
     "rest_framework",
-    'djoser',
-    'storages',
 ]
 CORS_ALLOW_ALL_ORIGINS = True
 MIDDLEWARE = [
@@ -121,38 +116,17 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 
 USE_TZ = True
-STORAGES = {
-    "default": {
-        "BACKEND": "django.core.files.storage.FileSystemStorage",
-    },
-    "staticfiles": {
-        "BACKEND": "django.contrib.staticfiles.storage.StaticFilesStorage",
-    },
-}
-
-USE_S3 = os.getenv('USE_S3') == 'TRUE'
-
-if USE_S3:
-    # aws settings
-    AWS_ACCESS_KEY_ID = os.getenv('AWS_ACCESS_KEY_ID')
-    AWS_SECRET_ACCESS_KEY = os.getenv('AWS_SECRET_ACCESS_KEY')
-    AWS_STORAGE_BUCKET_NAME = os.getenv('AWS_STORAGE_BUCKET_NAME')
-    AWS_S3_CUSTOM_DOMAIN = f'{AWS_STORAGE_BUCKET_NAME}.s3.amazonaws.com'
-    # AWS_S3_OBJECT_PARAMETERS = {'CacheControl': 'max-age=86400'}
-    MEDIA_URL = f"https://{AWS_S3_CUSTOM_DOMAIN}/media/"
-    DEFAULT_FILE_STORAGE = 'storages.backends.s3boto3.S3Boto3Storage'
-
-else:
-    MEDIA_URL = '/media/'
-    MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'static')
 
 
-CSRF_TRUSTED_ORIGINS = [
-    'https://564e-46-42-243-107.ngrok-free.app',
-    'https://564e-46-42-243-107.ngrok-free.app/auth/users/',
-]
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.1/howto/static-files/
+
+STATIC_URL = '/static/'  # URL для доступа к статическим файлам
+STATIC_ROOT = os.path.join(BASE_DIR, 'static')  # Директория для сбора статических файлов (например, с помощью collectstatic)
+
+# Настройки для медиафайлов (загружаемые пользователем файлы)
+MEDIA_URL = '/media/'  # URL для доступа к медиафайлам
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')  # Директория для хранения медиафайлов
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
@@ -170,12 +144,10 @@ REST_FRAMEWORK = {
     'PAGE_SIZE': 10,
 }
 
-
-# STATICFILES_STORAGE = "storages.backends.s3.S3Storage"
-
-#
-DJOSER = {
-    'SERIALIZERS': {
-        'user_create': 'gallery.serializers.CustomUserCreateSerializer',
-    },
-}
+# STORAGES = {
+#     "default": {
+#         "BACKEND": "storages.backends.s3.S3Storage",
+#         "OPTIONS": {
+#         },
+#     },
+# }
