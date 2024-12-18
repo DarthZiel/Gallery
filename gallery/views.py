@@ -16,3 +16,4 @@ class GetThreeDModel(generics.RetrieveAPIView):
     queryset = ThreeDModel.objects.all()
 
 
+
