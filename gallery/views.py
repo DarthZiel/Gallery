@@ -19,3 +19,10 @@ class GetThreeDModels(generics.ListAPIView):
 class GetThreeDModel(generics.RetrieveAPIView):
     serializer_class = ThreeDModelSerializer
     queryset = ThreeDModel.objects.all()
+
+
+class ShareGallery(generics.ListAPIView):
+    serializer_class = ThreeDModelSerializer
+    queryset = ThreeDModel.objects.all()
+
+    lookup_field = 'username'
