@@ -1,6 +1,8 @@
 from django.db import models
 import os
-from uuid import uuid4
+from django.contrib.auth import get_user_model
+
+User = get_user_model()
 
 
 def custom_upload_to(instance, filename):
@@ -12,8 +14,8 @@ def custom_upload_to(instance, filename):
     return os.path.join('ThreeDModel', unique_filename)
 
 
-
 class ThreeDModel(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(
         max_length=255,
         verbose_name="Название файла",
@@ -34,4 +36,3 @@ class ThreeDModel(models.Model):
     class Meta:
         verbose_name = "Файл"
         verbose_name_plural = "Файлы"
-
