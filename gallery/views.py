@@ -25,4 +25,4 @@ class ShareGallery(generics.ListAPIView):
     serializer_class = ThreeDModelSerializer
     queryset = ThreeDModel.objects.all()
 
-    lookup_field = 'username'
+    lookup_field = 'username' #по юзеру
