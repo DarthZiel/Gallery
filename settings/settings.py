@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     "gallery.apps.GalleryConfig",
     "corsheaders",
     "rest_framework",
+    'rest_framework.authtoken',
     'djoser',
     'storages',
 ]
@@ -166,7 +167,13 @@ REST_FRAMEWORK = {
         'rest_framework.filters.SearchFilter',  # Для поиска
     ],
     'DEFAULT_PAGINATION_CLASS': 'rest_framework.pagination.PageNumberPagination',
+
     'PAGE_SIZE': 10,
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }
 
 # STORAGES = {
@@ -177,9 +184,15 @@ REST_FRAMEWORK = {
 #     },
 # }
 
-
 DJOSER = {
+    'LOGIN_FIELD': 'username',  # Используем username для входа
+    'USER_CREATE_PASSWORD_RETYPE': True,  # Требовать повторный ввод пароля
     'SERIALIZERS': {
-        'user_create': 'gallery.serializers.CustomUserCreateSerializer',
+        'user_create': 'djoser.serializers.CustomUserCreateSerializer',
+    },
+    'PERMISSIONS': {
+        'user_create': ['rest_framework.permissions.AllowAny'], 
+        'user_list': ['rest_framework.permissions.AllowAny'], 
     },
 }
+

@@ -23,6 +23,8 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     re_path(r'^auth/', include('djoser.urls')),
     path('api/v1/', include('gallery.urls')),
+   re_path(r'^auth/', include('djoser.urls.authtoken')),
+
 ]
 
 
